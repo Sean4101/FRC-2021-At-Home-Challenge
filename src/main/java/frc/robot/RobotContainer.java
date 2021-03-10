@@ -4,11 +4,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.CylinderPull;
+import frc.robot.commands.CylinderPush;
+import frc.robot.commands.DoNothing;
+import frc.robot.subsystems.TheGreatCylinder;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,14 +23,39 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private Joystick m_stick;
+  private XboxController m_controller;
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private JoystickButton AButton;
+  private JoystickButton BButton;
+
+  private Compressor compressor;
+  private DoubleSolenoid valve1;
+  private DoubleSolenoid valve2;
+
+  private TheGreatCylinder m_cylinder;
+
+  private DoNothing m_doNothing;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    m_stick = new Joystick(Constants.getCTRL("Joystick"));
+    m_controller = new XboxController(Constants.getCTRL("Xbox Controller"));
+
+    AButton = new JoystickButton(m_controller, 1);
+    BButton = new JoystickButton(m_controller, 2);
+
+    compressor = new Compressor(Constants.getCAN("PCM"));
+
+    valve1 = new DoubleSolenoid(Constants.getCAN("PCM"), 
+      Constants.getPCM("valve 1 forward"), Constants.getPCM("valve 1 reverse"));
+    valve2 = new DoubleSolenoid(Constants.getCAN("PCM"), 
+      Constants.getPCM("valve 2 forward"), Constants.getPCM("valve 2 reverse"));
+    m_cylinder = new TheGreatCylinder(valve1, valve2);
+
+    m_doNothing = new DoNothing();
+
     configureButtonBindings();
   }
 
@@ -34,7 +65,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    AButton.whenPressed(new CylinderPush(m_cylinder));
+    BButton.whenPressed(new CylinderPull(m_cylinder));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -42,7 +76,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_doNothing;
   }
 }
