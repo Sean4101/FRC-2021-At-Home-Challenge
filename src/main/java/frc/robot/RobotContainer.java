@@ -9,12 +9,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.CylinderPull;
-import frc.robot.commands.CylinderPush;
-import frc.robot.commands.DoNothing;
-import frc.robot.subsystems.TheGreatCylinder;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,39 +22,38 @@ import frc.robot.subsystems.TheGreatCylinder;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private Joystick m_stick;
-  private XboxController m_controller;
+  private final Joystick m_stick = new Joystick(Constants.getCTRL("Joystick"));
+  private final XboxController m_controller = new XboxController(Constants.getCTRL("Xbox Controller"));
 
-  private JoystickButton AButton;
-  private JoystickButton BButton;
+  private final JoystickButton AButton = new JoystickButton(m_controller, 1);
+  private final JoystickButton BButton = new JoystickButton(m_controller, 2);
+  private final JoystickButton LBumperButton = new JoystickButton(m_controller, 5);
+  private final JoystickButton RBumperButton = new JoystickButton(m_controller, 6);
 
-  private Compressor compressor;
-  private DoubleSolenoid valve1;
-  private DoubleSolenoid valve2;
+  private final Compressor compressor = new Compressor(Constants.getCAN("PCM"));;
+  private final DoubleSolenoid valve1 = new DoubleSolenoid(Constants.getCAN("PCM"), 
+  Constants.getPCM("valve 1 forward"), Constants.getPCM("valve 1 reverse"));;
+  private final DoubleSolenoid valve2 = new DoubleSolenoid(Constants.getCAN("PCM"), 
+  Constants.getPCM("valve 2 forward"), Constants.getPCM("valve 2 reverse"));
 
-  private TheGreatCylinder m_cylinder;
+  private final TheGreatCylinder m_cylinder = new TheGreatCylinder(valve1, valve2);
+  private final BaseDrive m_drive = new BaseDrive(
+    Constants.getCAN("drive lf"), 
+    Constants.getCAN("drive lb"), 
+    Constants.getCAN("drive rf"), 
+    Constants.getCAN("drive rb")
+  );
 
-  private DoNothing m_doNothing;
+  private final DoNothing m_doNothing = new DoNothing();;
+  private final OldFashionTankDrive  m_tankDrive = new OldFashionTankDrive(
+    m_drive, 
+    () -> m_controller.getY(Hand.kLeft), 
+    () -> m_controller.getY(Hand.kRight)
+  );
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    m_stick = new Joystick(Constants.getCTRL("Joystick"));
-    m_controller = new XboxController(Constants.getCTRL("Xbox Controller"));
-
-    AButton = new JoystickButton(m_controller, 1);
-    BButton = new JoystickButton(m_controller, 2);
-
-    compressor = new Compressor(Constants.getCAN("PCM"));
-
-    valve1 = new DoubleSolenoid(Constants.getCAN("PCM"), 
-      Constants.getPCM("valve 1 forward"), Constants.getPCM("valve 1 reverse"));
-    valve2 = new DoubleSolenoid(Constants.getCAN("PCM"), 
-      Constants.getPCM("valve 2 forward"), Constants.getPCM("valve 2 reverse"));
-    m_cylinder = new TheGreatCylinder(valve1, valve2);
-
-    m_doNothing = new DoNothing();
-
     configureButtonBindings();
   }
 
@@ -66,8 +64,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    AButton.whenPressed(new CylinderPush(m_cylinder));
-    BButton.whenPressed(new CylinderPull(m_cylinder));
+    AButton.toggleWhenPressed(new CylinderPush(m_cylinder));
+    LBumperButton.whenPressed(new BaseSpeedDown(m_drive));
+    RBumperButton.whenPressed(new BaseSpeedUp(m_drive));
   }
 
   /**
@@ -77,5 +76,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return m_doNothing;
+  }
+
+  public Command getBaseCommand() {
+    System.out.println("hello");
+    return m_tankDrive;
   }
 }

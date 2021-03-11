@@ -17,7 +17,7 @@ public class CylinderPush extends CommandBase {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public void end(boolean interrupted) {
+        m_cylinder.Pull();
     }
 }

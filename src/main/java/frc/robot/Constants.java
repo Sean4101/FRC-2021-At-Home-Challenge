@@ -24,6 +24,8 @@ public final class Constants {
     private static HashMap<String, Integer> mapDIO; // the DIO port map
     private static HashMap<String, Integer> mapCTRL; // the controller port map
 
+    public static double[] baseSpeedList = {.4, .6, .8, 1.};
+
     public Constants() {
         mapPWM = new HashMap<>();
         mapPCM = new HashMap<>();
@@ -34,17 +36,22 @@ public final class Constants {
         setCTRL("Joystick", 1);
         setCTRL("Xbox Controller", 2);
 
-        setPCM("valve 1 forward", 0);
-        setPCM("valve 1 reverse", 1);
-        setPCM("valve 2 forward", 2);
-        setPCM("valve 2 reverse", 3);
+        setPCM("valve 1 forward", 2);
+        setPCM("valve 1 reverse", 3);
+        setPCM("valve 2 forward", 0);
+        setPCM("valve 2 reverse", 1);
 
         setCAN("PCM", 49);
-        setCAN("drive lf", 0);
-        setCAN("drive lb", 1);
-        setCAN("drive rf", 2);
-        setCAN("drive rb", 3);
+        setCAN("drive lf", 1);
+        setCAN("drive lb", 3);
+        setCAN("drive rf", 0);
+        setCAN("drive rb", 2);
     }
+
+    public static boolean base_lf_reverse = true;
+    public static boolean base_lb_reverse = true;
+    public static boolean base_rf_reverse = true;
+    public static boolean base_rb_reverse = true;
 
     /**
      * Method to set a PWM port
