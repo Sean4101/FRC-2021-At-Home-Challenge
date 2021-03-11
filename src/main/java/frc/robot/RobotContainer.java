@@ -43,6 +43,7 @@ public class RobotContainer {
     Constants.getCAN("drive rf"), 
     Constants.getCAN("drive rb")
   );
+  private final Transporting m_transporting = new Transporting(Constants.getCAN("ballsSlapper"));
 
   private final DoNothing m_doNothing = new DoNothing();;
   private final OldFashionTankDrive  m_tankDrive = new OldFashionTankDrive(
@@ -65,6 +66,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     AButton.toggleWhenPressed(new CylinderPush(m_cylinder));
+    BButton.toggleWhenPressed(new Slap(m_transporting));
     LBumperButton.whenPressed(new BaseSpeedDown(m_drive));
     RBumperButton.whenPressed(new BaseSpeedUp(m_drive));
   }
@@ -79,7 +81,6 @@ public class RobotContainer {
   }
 
   public Command getBaseCommand() {
-    System.out.println("hello");
     return m_tankDrive;
   }
 }

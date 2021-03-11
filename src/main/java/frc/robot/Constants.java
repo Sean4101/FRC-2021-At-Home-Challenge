@@ -25,6 +25,7 @@ public final class Constants {
     private static HashMap<String, Integer> mapCTRL; // the controller port map
 
     public static double[] baseSpeedList = {.4, .6, .8, 1.};
+    public static double slapSpeed = - 0.8;
 
     public Constants() {
         mapPWM = new HashMap<>();
@@ -46,6 +47,7 @@ public final class Constants {
         setCAN("drive lb", 3);
         setCAN("drive rf", 0);
         setCAN("drive rb", 2);
+        setCAN("ballsSlapper",4);
     }
 
     public static boolean base_lf_reverse = true;
