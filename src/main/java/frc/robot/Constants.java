@@ -48,6 +48,11 @@ public final class Constants {
         setCAN("drive rf", 0);
         setCAN("drive rb", 2);
         setCAN("ballsSlapper",4);
+        setCAN("lazySusan", 7);
+        setCAN("lshoot", 0);
+        setCAN("rshoot", 1);
+        setCAN("arm", 6);
+        setCAN("intake", 5);
     }
 
     public static boolean base_lf_reverse = true;

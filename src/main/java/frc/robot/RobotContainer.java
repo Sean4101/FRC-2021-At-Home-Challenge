@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import javax.print.attribute.standard.Finishings;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -12,6 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -29,6 +32,11 @@ public class RobotContainer {
   private final JoystickButton BButton = new JoystickButton(m_controller, 2);
   private final JoystickButton LBumperButton = new JoystickButton(m_controller, 5);
   private final JoystickButton RBumperButton = new JoystickButton(m_controller, 6);
+  private final JoystickButton xButton = new JoystickButton(m_controller, 3);
+  private final JoystickButton yButton = new JoystickButton(m_controller, 4);
+  private final POVButton povup = new POVButton(m_controller, 90);
+  private final POVButton povdown = new POVButton(m_controller, 270);
+
 
   private final Compressor compressor = new Compressor(Constants.getCAN("PCM"));;
   private final DoubleSolenoid valve1 = new DoubleSolenoid(Constants.getCAN("PCM"), 
@@ -44,8 +52,11 @@ public class RobotContainer {
     Constants.getCAN("drive rb")
   );
   private final Transporting m_transporting = new Transporting(Constants.getCAN("ballsSlapper"));
-
-  private final DoNothing m_doNothing = new DoNothing();;
+  private final Taking m_taking = new Taking(Constants.getCAN("intake"));
+  private final Takeballarm m_arm = new Takeballarm(Constants.getCAN("arm"));
+  private final StoreBall m_storeBall = new StoreBall(Constants.getCAN("lazySusan"));
+  private final Shooter m_shooter = new Shooter(Constants.getCAN("lshoot"),Constants.getCAN("rshoot"));
+  private final DoNothing m_doNothing = new DoNothing();
   private final OldFashionTankDrive  m_tankDrive = new OldFashionTankDrive(
     m_drive, 
     () -> m_controller.getY(Hand.kLeft), 
@@ -65,10 +76,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    AButton.toggleWhenPressed(new CylinderPush(m_cylinder));
+    AButton.toggleWhenPressed(new take(m_taking));
     BButton.toggleWhenPressed(new Slap(m_transporting));
+    xButton.whenHeld(new Spin(m_storeBall));
+    yButton.toggleWhenPressed(new Shooting(m_shooter));
     LBumperButton.whenPressed(new BaseSpeedDown(m_drive));
     RBumperButton.whenPressed(new BaseSpeedUp(m_drive));
+    povup.whenHeld(new armup(m_arm));
+    povdown.whenHeld(new armdown(m_arm));
   }
 
   /**
