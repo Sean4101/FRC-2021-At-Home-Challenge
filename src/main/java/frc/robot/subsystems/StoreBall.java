@@ -12,7 +12,7 @@ public class StoreBall extends SubsystemBase{
     }
 
     public void Spin(){
-        m_lazySusan.set(.4);
+        m_lazySusan.set(Constants.susanSpeed);
     }
 
     public void StopSpin(){

@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import javax.print.attribute.standard.Finishings;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -52,8 +50,7 @@ public class RobotContainer {
     Constants.getCAN("drive rb")
   );
   private final Transporting m_transporting = new Transporting(Constants.getCAN("ballsSlapper"));
-  private final Taking m_taking = new Taking(Constants.getCAN("intake"));
-  private final Takeballarm m_arm = new Takeballarm(Constants.getCAN("arm"));
+  private final Intaking m_intaking = new Intaking(Constants.getCAN("intake"), Constants.getCAN("arm"));
   private final StoreBall m_storeBall = new StoreBall(Constants.getCAN("lazySusan"));
   private final Shooter m_shooter = new Shooter(Constants.getCAN("lshoot"),Constants.getCAN("rshoot"));
   private final DoNothing m_doNothing = new DoNothing();
@@ -76,14 +73,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    AButton.toggleWhenPressed(new take(m_taking));
+    AButton.toggleWhenPressed(new Intake(m_intaking));
     BButton.toggleWhenPressed(new Slap(m_transporting));
     xButton.whenHeld(new Spin(m_storeBall));
     yButton.toggleWhenPressed(new Shooting(m_shooter));
     LBumperButton.whenPressed(new BaseSpeedDown(m_drive));
     RBumperButton.whenPressed(new BaseSpeedUp(m_drive));
-    povup.whenHeld(new armup(m_arm));
-    povdown.whenHeld(new armdown(m_arm));
+    povup.whenHeld(new ArmUp(m_intaking));
+    povdown.whenHeld(new ArmDown(m_intaking));
   }
 
   /**

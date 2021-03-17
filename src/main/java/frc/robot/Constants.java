@@ -25,7 +25,14 @@ public final class Constants {
     private static HashMap<String, Integer> mapCTRL; // the controller port map
 
     public static double[] baseSpeedList = {.4, .6, .8, 1.};
-    public static double slapSpeed = - 0.8;
+    public static double slapSpeed = -.8;
+    public static double intakeSpeed = -.85;
+    public static double armUpSpeed = .7;
+    public static double armDownSpeed = -.8;
+    public static double l_shootSpeed = .8;
+    public static double r_shootSpeed = -.7;
+    public static double susanSpeed = .4;
+
 
     public Constants() {
         mapPWM = new HashMap<>();

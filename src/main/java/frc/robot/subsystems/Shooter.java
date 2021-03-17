@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,8 +13,8 @@ public class Shooter extends SubsystemBase{
         m_rshoot = new WPI_TalonSRX(rshoot);
     }
     public void Shooting(){
-        m_lshoot.set(.8);
-        m_rshoot.set(-.7);
+        m_lshoot.set(Constants.l_shootSpeed);
+        m_rshoot.set(Constants.r_shootSpeed);
     }
     public void StopShooting(){
         m_lshoot.set(0);
