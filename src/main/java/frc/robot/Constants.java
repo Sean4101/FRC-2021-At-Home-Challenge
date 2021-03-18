@@ -34,6 +34,14 @@ public final class Constants {
     public static double susanSpeed = .4;
 
 
+    public static double baseWheelXOffset = 0.295; // Meter
+    public static double baseWheelYOffset = 0.26; // Meter
+    public static boolean base_lf_reverse = true;
+    public static boolean base_lb_reverse = true;
+    public static boolean base_rf_reverse = true;
+    public static boolean base_rb_reverse = true;
+
+
     public Constants() {
         mapPWM = new HashMap<>();
         mapPCM = new HashMap<>();
@@ -61,11 +69,6 @@ public final class Constants {
         setCAN("arm", 6);
         setCAN("intake", 5);
     }
-
-    public static boolean base_lf_reverse = true;
-    public static boolean base_lb_reverse = true;
-    public static boolean base_rf_reverse = true;
-    public static boolean base_rb_reverse = true;
 
     /**
      * Method to set a PWM port

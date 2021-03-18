@@ -26,14 +26,14 @@ public class RobotContainer {
   private final Joystick m_stick = new Joystick(Constants.getCTRL("Joystick"));
   private final XboxController m_controller = new XboxController(Constants.getCTRL("Xbox Controller"));
 
-  private final JoystickButton AButton = new JoystickButton(m_controller, 1);
-  private final JoystickButton BButton = new JoystickButton(m_controller, 2);
-  private final JoystickButton LBumperButton = new JoystickButton(m_controller, 5);
-  private final JoystickButton RBumperButton = new JoystickButton(m_controller, 6);
-  private final JoystickButton xButton = new JoystickButton(m_controller, 3);
-  private final JoystickButton yButton = new JoystickButton(m_controller, 4);
-  private final POVButton povup = new POVButton(m_controller, 90);
-  private final POVButton povdown = new POVButton(m_controller, 270);
+  private final JoystickButton a_Button = new JoystickButton(m_controller, 1);
+  private final JoystickButton b_Button = new JoystickButton(m_controller, 2);
+  private final JoystickButton x_Button = new JoystickButton(m_controller, 3);
+  private final JoystickButton y_Button = new JoystickButton(m_controller, 4);
+  private final JoystickButton l_Bumper = new JoystickButton(m_controller, 5);
+  private final JoystickButton r_Bumper = new JoystickButton(m_controller, 6);
+  private final POVButton pov_Up = new POVButton(m_controller, 90);
+  private final POVButton pov_Down = new POVButton(m_controller, 270);
 
 
   private final Compressor compressor = new Compressor(Constants.getCAN("PCM"));;
@@ -43,7 +43,7 @@ public class RobotContainer {
   Constants.getPCM("valve 2 forward"), Constants.getPCM("valve 2 reverse"));
 
   private final TheGreatCylinder m_cylinder = new TheGreatCylinder(valve1, valve2);
-  private final BaseDrive m_drive = new BaseDrive(
+  private final BaseDrive m_drive = new DifferentialBaseDrive(
     Constants.getCAN("drive lf"), 
     Constants.getCAN("drive lb"), 
     Constants.getCAN("drive rf"), 
@@ -73,14 +73,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    AButton.toggleWhenPressed(new Intake(m_intaking));
-    BButton.toggleWhenPressed(new Slap(m_transporting));
-    xButton.whenHeld(new Spin(m_storeBall));
-    yButton.toggleWhenPressed(new Shooting(m_shooter));
-    LBumperButton.whenPressed(new BaseSpeedDown(m_drive));
-    RBumperButton.whenPressed(new BaseSpeedUp(m_drive));
-    povup.whenHeld(new ArmUp(m_intaking));
-    povdown.whenHeld(new ArmDown(m_intaking));
+    a_Button.toggleWhenPressed(new Intake(m_intaking));
+    b_Button.toggleWhenPressed(new Slap(m_transporting));
+    x_Button.whenHeld(new Spin(m_storeBall));
+    y_Button.toggleWhenPressed(new Shooting(m_shooter));
+    l_Bumper.whenPressed(new BaseSpeedDown(m_drive));
+    r_Bumper.whenPressed(new BaseSpeedUp(m_drive));
+    pov_Up.whenHeld(new ArmUp(m_intaking));
+    pov_Down.whenHeld(new ArmDown(m_intaking));
   }
 
   /**
