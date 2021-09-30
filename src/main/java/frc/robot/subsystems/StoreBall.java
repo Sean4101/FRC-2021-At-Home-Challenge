@@ -19,4 +19,8 @@ public class StoreBall extends SubsystemBase{
         m_lazySusan.set(0);
     }
 
+    public void Reverse(){
+        m_lazySusan.set(-.4);
+    }
+
 }

@@ -34,8 +34,8 @@ public final class Constants {
         mapDIO = new HashMap<>();
         mapCTRL = new HashMap<>();
 
-        setCTRL("Joystick", 1);
-        setCTRL("Xbox Controller", 2);
+        setCTRL("Xbox Controller", 0);
+        setCTRL("Xbox Controller2", 1);
 
         setPCM("valve 1 forward", 2);
         setPCM("valve 1 reverse", 3);
@@ -59,6 +59,12 @@ public final class Constants {
     public static boolean base_lb_reverse = true;
     public static boolean base_rf_reverse = true;
     public static boolean base_rb_reverse = true;
+
+    public static final int kSlotIdx = 0;
+    public static final int kPIDLoopIdx = 0;
+    public static final int kTimeoutMs = 30;
+    // public final static Gains kGains_Velocit = new Gains( 0.5, 0.01, 20, 1023.0/7200.0,  300,  1.00);
+
 
     /**
      * Method to set a PWM port

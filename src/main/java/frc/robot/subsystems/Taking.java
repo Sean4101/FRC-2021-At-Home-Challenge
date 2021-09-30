@@ -12,11 +12,11 @@ public class Taking extends SubsystemBase{
     }
 
     public void take(){
-        m_intake.set(-.85);
+        m_intake.set(-.4);
     }
 
     public void Stoptake(){
         m_intake.set(0);
-    }
+    } 
 
 }

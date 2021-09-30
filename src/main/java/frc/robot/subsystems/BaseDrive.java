@@ -39,6 +39,9 @@ public class BaseDrive extends SubsystemBase {
     public void TankDrive(double left_speed, double right_speed) {
         m_drive.tankDrive(left_speed*baseSpeed, right_speed*baseSpeed);
     }
+    public void TankDriveRaw(double left_speed, double right_speed) {
+        m_drive.tankDrive(left_speed, right_speed);
+    }
 
     public void SpeedUp() {
         speedChannel = speedChannel < Constants.baseSpeedList.length - 1 ? speedChannel + 1 : Constants.baseSpeedList.length - 1;
@@ -48,5 +51,24 @@ public class BaseDrive extends SubsystemBase {
     public void SpeedDown() {
         speedChannel = speedChannel > 0 ? speedChannel - 1 : 0;
         baseSpeed = Constants.baseSpeedList[speedChannel];
+    }
+
+    public void TurnLeft(double speed) {
+        if (speed<0) speed = -speed;
+        if (speed>0.3) speed = 0.3;
+        m_leftGroup.set(speed);
+        m_rightGroup.set(speed);
+    }
+    
+    public void TurnRight(double speed) {
+        if (speed<0) speed = -speed;
+        if (speed>0.2) speed = 0.2;
+        m_rightGroup.set(-speed);
+        m_leftGroup.set(-speed);
+    }
+
+    public void StopAuto(){
+        m_leftGroup.set(0);
+        m_rightGroup.set(0);
     }
 }

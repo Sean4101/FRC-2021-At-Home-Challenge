@@ -13,11 +13,11 @@ public class armup extends CommandBase{
 
     @Override public void initialize(){
         m_takeballarm.armup();
-        System.out.println("hi");
+        
     }
     
     @Override public void end(boolean interrupted) {
         m_takeballarm.stoparm();
-        System.out.println("Yo");
+        
     }
 }
