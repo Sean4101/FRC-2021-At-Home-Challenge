@@ -4,11 +4,14 @@
 
 package frc.robot;
 
+<<<<<<< HEAD
 import javax.print.attribute.standard.Finishings;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+=======
+>>>>>>> cd492c4436918a75fce720b08e6ff5103e6e88c3
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -30,6 +33,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
 
+<<<<<<< HEAD
   private final XboxController m_controller = new XboxController(Constants.getCTRL("Xbox Controller"));
   private final XboxController m_controller2 = new XboxController(Constants.getCTRL("Xbox Controller2"));
   private final JoystickButton AButton = new JoystickButton(m_controller, 1);
@@ -48,6 +52,16 @@ public class RobotContainer {
   private final POVButton povout1 = new POVButton(m_controller, 270);
   private final JoystickButton AutoButton = new JoystickButton(m_controller2, 1);
   private final POVButton rShoot = new POVButton(m_controller, 0);
+=======
+  private final JoystickButton a_Button = new JoystickButton(m_controller, 1);
+  private final JoystickButton b_Button = new JoystickButton(m_controller, 2);
+  private final JoystickButton x_Button = new JoystickButton(m_controller, 3);
+  private final JoystickButton y_Button = new JoystickButton(m_controller, 4);
+  private final JoystickButton l_Bumper = new JoystickButton(m_controller, 5);
+  private final JoystickButton r_Bumper = new JoystickButton(m_controller, 6);
+  private final POVButton pov_Up = new POVButton(m_controller, 90);
+  private final POVButton pov_Down = new POVButton(m_controller, 270);
+>>>>>>> cd492c4436918a75fce720b08e6ff5103e6e88c3
 
   private final Compressor compressor = new Compressor(Constants.getCAN("PCM"));
   private final DoubleSolenoid valve1 = new DoubleSolenoid(Constants.getCAN("PCM"), 
@@ -56,7 +70,7 @@ public class RobotContainer {
   Constants.getPCM("valve 2 forward"), Constants.getPCM("valve 2 reverse"));
 
   private final TheGreatCylinder m_cylinder = new TheGreatCylinder(valve1, valve2);
-  private final BaseDrive m_drive = new BaseDrive(
+  private final BaseDrive m_drive = new DifferentialBaseDrive(
     Constants.getCAN("drive lf"), 
     Constants.getCAN("drive lb"), 
     Constants.getCAN("drive rf"), 
@@ -64,8 +78,7 @@ public class RobotContainer {
   );
 
   private final Transporting m_transporting = new Transporting(Constants.getCAN("ballsSlapper"));
-  private final Taking m_taking = new Taking(Constants.getCAN("intake"));
-  private final Takeballarm m_arm = new Takeballarm(Constants.getCAN("arm"));
+  private final Intaking m_intaking = new Intaking(Constants.getCAN("intake"), Constants.getCAN("arm"));
   private final StoreBall m_storeBall = new StoreBall(Constants.getCAN("lazySusan"));
   private final Shooter m_shooter = new Shooter(Constants.getCAN("lshoot"),Constants.getCAN("rshoot"));
   
@@ -93,6 +106,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+<<<<<<< HEAD
     AButton.toggleWhenPressed(new take(m_taking));
     // AButton.toggleWhenPressed(new AutoShoot(m_drive));
     BButton.toggleWhenPressed(new Slap(m_transporting));
@@ -109,6 +123,16 @@ public class RobotContainer {
     povup.whenHeld(new Reverse(m_storeBall));
     climb.toggleWhenPressed(new CylinderPush(m_cylinder));
     rShoot.toggleWhenPressed(new Rshooting(m_shooter));
+=======
+    a_Button.toggleWhenPressed(new Intake(m_intaking));
+    b_Button.toggleWhenPressed(new Slap(m_transporting));
+    x_Button.whenHeld(new Spin(m_storeBall));
+    y_Button.toggleWhenPressed(new Shooting(m_shooter));
+    l_Bumper.whenPressed(new BaseSpeedDown(m_drive));
+    r_Bumper.whenPressed(new BaseSpeedUp(m_drive));
+    pov_Up.whenHeld(new ArmUp(m_intaking));
+    pov_Down.whenHeld(new ArmDown(m_intaking));
+>>>>>>> cd492c4436918a75fce720b08e6ff5103e6e88c3
   }
 
  /* private void configureTalonSRX_sensor(WPI_TalonSRX _talon)

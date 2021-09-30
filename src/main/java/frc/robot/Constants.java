@@ -25,7 +25,22 @@ public final class Constants {
     private static HashMap<String, Integer> mapCTRL; // the controller port map
 
     public static double[] baseSpeedList = {.4, .6, .8, 1.};
-    public static double slapSpeed = - 0.8;
+    public static double slapSpeed = -.8;
+    public static double intakeSpeed = -.85;
+    public static double armUpSpeed = .7;
+    public static double armDownSpeed = -.8;
+    public static double l_shootSpeed = .8;
+    public static double r_shootSpeed = -.7;
+    public static double susanSpeed = .4;
+
+
+    public static double baseWheelXOffset = 0.295; // Meter
+    public static double baseWheelYOffset = 0.26; // Meter
+    public static boolean base_lf_reverse = true;
+    public static boolean base_lb_reverse = true;
+    public static boolean base_rf_reverse = true;
+    public static boolean base_rb_reverse = true;
+
 
     public Constants() {
         mapPWM = new HashMap<>();
@@ -55,6 +70,7 @@ public final class Constants {
         setCAN("intake", 5);
     }
 
+<<<<<<< HEAD
     public static boolean base_lf_reverse = true;
     public static boolean base_lb_reverse = true;
     public static boolean base_rf_reverse = true;
@@ -66,6 +82,8 @@ public final class Constants {
     // public final static Gains kGains_Velocit = new Gains( 0.5, 0.01, 20, 1023.0/7200.0,  300,  1.00);
 
 
+=======
+>>>>>>> cd492c4436918a75fce720b08e6ff5103e6e88c3
     /**
      * Method to set a PWM port
      * 

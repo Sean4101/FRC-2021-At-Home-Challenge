@@ -1,41 +1,18 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class BaseDrive extends SubsystemBase {
-    private WPI_VictorSPX m_lf;
-    private WPI_VictorSPX m_lb;
-    private WPI_VictorSPX m_rf;
-    private WPI_VictorSPX m_rb;
-    private SpeedControllerGroup m_leftGroup;
-    private SpeedControllerGroup m_rightGroup;
-    private DifferentialDrive m_drive;
+    protected double baseSpeed;
+    protected int speedChannel;
 
-    private double baseSpeed;
-    private int speedChannel;
-
-    public BaseDrive(int left_front, int left_back, int right_front, int right_back) {
-        m_lf = new WPI_VictorSPX(left_front);
-        m_lb = new WPI_VictorSPX(left_back);
-        m_rf = new WPI_VictorSPX(right_front);
-        m_rb = new WPI_VictorSPX(right_back);
-        m_lf.setInverted(Constants.base_lf_reverse);
-        m_lb.setInverted(Constants.base_lb_reverse);
-        m_rf.setInverted(Constants.base_rf_reverse);
-        m_rb.setInverted(Constants.base_rb_reverse);
-        m_leftGroup = new SpeedControllerGroup(m_lf, m_lb);
-        m_rightGroup = new SpeedControllerGroup(m_rf, m_rb);
-        m_drive = new DifferentialDrive(m_leftGroup, m_rightGroup);
-
+    public BaseDrive() {
         speedChannel = 0;
         baseSpeed = Constants.baseSpeedList[speedChannel];
     }
 
+<<<<<<< HEAD
     public void TankDrive(double left_speed, double right_speed) {
         m_drive.tankDrive(left_speed*baseSpeed, right_speed*baseSpeed);
     }
@@ -43,6 +20,8 @@ public class BaseDrive extends SubsystemBase {
         m_drive.tankDrive(left_speed, right_speed);
     }
 
+=======
+>>>>>>> cd492c4436918a75fce720b08e6ff5103e6e88c3
     public void SpeedUp() {
         speedChannel = speedChannel < Constants.baseSpeedList.length - 1 ? speedChannel + 1 : Constants.baseSpeedList.length - 1;
         baseSpeed = Constants.baseSpeedList[speedChannel];
